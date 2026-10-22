@@ -32,3 +32,29 @@ jobs:
               echo "DNS: [FALHOU] - Falha na resolução de $DOMINIO."
               exit 1
           fi
+  ping-test2:
+    needs: verificar-rede
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar repositório
+        uses: actions/checkout@v4
+
+      - name: Executar testes automatizados
+        run: |
+          echo "Rodando testes da aplicação..."
+          # Exemplo: npm test, pytest, etc.
+          echo "Testes executados com sucesso!"
+
+  # 3. Job de Deploy (só roda se os testes passarem)
+  ping-deploy3:
+    needs: testar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar repositório
+        uses: actions/checkout@v4
+
+      - name: Realizar o Deploy
+        run: |
+          echo "Iniciando deploy para o ambiente de produção..."
+          # Adicione aqui os comandos ou actions de deploy (ex: AWS, Heroku, SSH, etc.)
+          echo "Deploy concluído com sucesso!"
